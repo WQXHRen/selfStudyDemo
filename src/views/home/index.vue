@@ -2,10 +2,10 @@
   <div id="home">
     <van-nav-bar title="首页" />
 
-    <van-tabs v-model="active" class="my_tabs">
+    <van-tabs v-model="active" @change="tabChange" class="my_tabs">
       <van-tab v-for="(e,i) in channels" :key="i" :title="e.name">
         <van-pull-refresh v-model="pullLoading" @refresh="onRefresh">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <van-list v-model="loading" :finished="finished" finished-text="已经到底了!" @load="onLoad">
             <van-cell v-for="(item,index) in articleList" :key="index" :title="item.title" />
           </van-list>
         </van-pull-refresh>
@@ -30,6 +30,16 @@ export default {
     };
   },
   methods: {
+    //   点击别的tab
+    async tabChange() {
+      let res = await this.getArticle();
+      console.log(res);
+      this.articleList = res.data.data.results;
+      if (res.data.data.results.length == 0) {
+        this.finished = true;
+      }
+    },
+
     //   下拉刷新
     async onRefresh() {
       let res = await this.getArticle();
