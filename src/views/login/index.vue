@@ -36,9 +36,9 @@
 import { login } from "../../api/login";
 import "vant/lib/icon/local.css";
 import "./css/iconfont/iconfont.css";
-import {setUserInfo} from "../../storege/index"
+import { setUserInfo } from "../../storage/index";
 export default {
-  name:'login',
+  name: "login",
   data() {
     return {
       form: {
@@ -97,11 +97,11 @@ export default {
           message: "登录中..."
         });
 
-          let res = await login(this.form);
-          await toast.clear();
+        let res = await login(this.form);
+        await toast.clear();
         try {
-          setUserInfo('userInfo',res.data.data)
-          this.$router.push('/home');
+          setUserInfo(res.data.data);
+          this.$router.push("/home");
         } catch {
           this.$toast.fail({
             duration: 2000,

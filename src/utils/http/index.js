@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {getUserInfo} from '../../storage/index'
+import { getUserInfo } from '../../storage/index'
 export const http = axios.create({
     baseURL: "http://ttapi.research.itcast.cn"
 
