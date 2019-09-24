@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <van-button @click="login" class="loginBtn" type="info" size="small">登录</van-button>
+      <van-button @click="login" color="#202529" class="loginBtn" size="small">登录</van-button>
     </div>
   </div>
 </template>
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       form: {
-        mobile: "18801185985",
+        mobile: "13911111111",
         code: "246810"
       },
       isMoblie: false,

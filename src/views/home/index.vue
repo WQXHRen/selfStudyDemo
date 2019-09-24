@@ -10,6 +10,9 @@
           </van-list>
         </van-pull-refresh>
       </van-tab>
+      <div class="tab_right_btn">
+        <van-icon name="ellipsis" />
+      </div>
     </van-tabs>
   </div>
 </template>
@@ -32,9 +35,11 @@ export default {
   methods: {
     //   点击别的tab
     async tabChange() {
+      this.articleList = [];
+      this.finished = false;
       let res = await this.getArticle();
-      console.log(res);
-      this.articleList = res.data.data.results;
+    //   console.log(res);
+      this.articleList.push(...res.data.data.results);
       if (res.data.data.results.length == 0) {
         this.finished = true;
       }
@@ -86,7 +91,17 @@ export default {
     position: fixed;
     top: 46px;
     left: 0;
-    width: 100%;
+    width: 87%;
+    z-index: 998;
+  }
+  .tab_right_btn {
+    width: 13%;
+    background-color: #ffffff;
+    text-align: center;
+    line-height: 44px;
+    position: fixed;
+    top: 46px;
+    right: 0;
     z-index: 999;
   }
 }

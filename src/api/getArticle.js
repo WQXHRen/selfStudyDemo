@@ -5,9 +5,3 @@ export const Article = (data)=>{
         params:data
     })
 }
-
-// let data = {
-//     channel_id:"",
-//     timestamp"",
-//     with_top
-// }
