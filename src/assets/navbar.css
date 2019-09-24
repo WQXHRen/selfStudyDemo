@@ -1,0 +1,10 @@
+.van-nav-bar {
+  background-color: #3195f9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.van-nav-bar .van-nav-bar__title {
+  color: white;
+}

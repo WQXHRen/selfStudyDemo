@@ -1,8 +1,5 @@
-#login .loginNav {
-  background-color: #1989fa;
-}
-#login .loginNav .van-nav-bar__title {
-  color: white;
+#login {
+  margin-top: 46px;
 }
 #login .input_wrap {
   padding: 20px;

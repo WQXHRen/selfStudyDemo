@@ -100,7 +100,6 @@ export default {
           let res = await login(this.form);
           await toast.clear();
         try {
-          console.log(res);
           setUserInfo('userInfo',res.data.data)
           this.$router.push('/home');
         } catch {
@@ -116,5 +115,5 @@ export default {
 };
 </script>
 
-<style src="./css/index.css">
+<style src="./css/index.less" lang="less" scoped>
 </style>

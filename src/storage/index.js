@@ -1,5 +1,4 @@
 
-
 export const setUserInfo=(STORAGE_KEY,data)=>{
     window.localStorage.setItem(STORAGE_KEY,JSON.stringify(data))
 }

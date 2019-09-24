@@ -14,6 +14,7 @@ import 'amfe-flexible'
 import { Notify } from 'vant';
 Vue.use(Notify);
 
+import './assets/navbar.less'
 Vue.config.productionTip = false
 
 new Vue({
