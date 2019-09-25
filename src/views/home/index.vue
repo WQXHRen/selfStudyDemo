@@ -11,19 +11,25 @@
         </van-pull-refresh>
       </van-tab>
       <div class="tab_right_btn">
-        <van-icon name="ellipsis" />
+        <van-icon name="ellipsis" @click="changeShow=true"/>
       </div>
     </van-tabs>
+    <channel v-model="changeShow" :channels="channels"></channel>
   </div>
 </template>
 
 <script>
 import { getChannel } from "../../api/channel";
 import { Article } from "../../api/getArticle";
+import channel from "./channel.vue"
 export default {
   name: "home",
+  components:{
+    channel
+  },
   data() {
     return {
+      changeShow:true,
       pullLoading: false,
       channels: [],
       active: 0,
