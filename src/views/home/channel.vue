@@ -4,6 +4,7 @@
       v-model="show"
       @close="$emit('changeShow',false)"
       closeable
+      round
       close-icon-position="top-right"
       position="bottom"
       :style="{ height: '95%' }"
@@ -11,13 +12,26 @@
       <van-row class="my_row">
         <van-col span="12">我的频道</van-col>
         <van-col class="editBtn" span="12">
-          <van-button color="red" round size="mini" plain>编辑</van-button>
+          <van-button color="red" round size="mini" plain @click="clickEdit">{{editText}}</van-button>
         </van-col>
       </van-row>
 
-      <van-row gutter="15">
+      <van-row gutter="7">
         <van-col span="6" v-for="(item,index) in channels">
-          <van-button size="small" color="#7232dd">{{item.name}}</van-button>
+          <van-button
+            size="small"
+            :color="active==index?'#F00':'#000'"
+            plain
+            @click="$emit('update:active', index)"
+          >
+            {{item.name}}
+            <van-icon
+              class="close-icon"
+              name="clear"
+              v-show="isEdit&&item.name!='推荐'"
+              @click="doDel(item)"
+            />
+          </van-button>
         </van-col>
       </van-row>
 
@@ -25,15 +39,15 @@
         <van-col span="12">频道推荐</van-col>
       </van-row>
 
-      <van-row gutter="15">
-        <van-col span="6">
-          <van-button size="small" color="#7232dd">单色按钮</van-button>
-        </van-col>
-        <van-col span="6">
-          <van-button size="small" color="#7232dd">单色按钮</van-button>
-        </van-col>
-        <van-col span="6">
-          <van-button size="small" color="#7232dd">单色按钮</van-button>
+      <van-row gutter="7">
+        <van-col span="6" v-for="(item,index) in otherChannel">
+          <van-button
+            size="small"
+            color="#000"
+            :disabled="!isEdit"
+            plain
+            @click="addChannel(item)"
+          >{{item.name}}</van-button>
         </van-col>
       </van-row>
     </van-popup>
@@ -41,17 +55,67 @@
 </template>
 
 <script>
+import { getAllChannel, setChannel } from "@/api/channel.js";
 export default {
   name: "channel",
-  props: ["show","channels"],
+  props: ["show", "channels", "active"],
   model: {
     prop: "show",
     event: "changeShow"
   },
   data() {
-    return {};
+    return {
+      AllChannel: [],
+      isEdit: false,
+      editText: "编辑"
+    };
   },
-  methods: {}
+  methods: {
+    //   删除频道
+    doDel(item) {
+      this.channels.splice(this.channels.indexOf(item), 1);
+    },
+
+    async clickEdit() {
+      if (this.isEdit) {
+        let channels = this.channels.slice(1).map((item, index) => {
+          return {
+            id: item.id,
+            seq: index + 1
+          };
+        });
+
+        let res = await setChannel(channels);
+      }
+      this.isEdit = !this.isEdit;
+      this.editText = this.isEdit ? "完成" : "编辑";
+    },
+    addChannel(ele) {
+      this.channels.push(ele);
+    }
+  },
+  async created() {
+    let res = await getAllChannel();
+    // console.log(res);
+    this.AllChannel = res.data.data.channels;
+  },
+  computed: {
+    otherChannel() {
+      let otherChannel = [];
+      for (var i = 0; i < this.AllChannel.length; i++) {
+        let flag = true;
+        for (var j = 0; j < this.channels.length; j++) {
+          if (this.AllChannel[i].id == this.channels[j].id) {
+            flag = false;
+          }
+        }
+        if (flag) {
+          otherChannel.push(this.AllChannel[i]);
+        }
+      }
+      return otherChannel;
+    }
+  }
 };
 </script>
 
@@ -62,8 +126,19 @@ export default {
   .van-row {
     margin-top: 15px;
     font-size: 14px;
-    .van-col{
-        margin-top: 10px;
+    .van-col {
+      margin-top: 10px;
+      .close-icon {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+      }
+      .van-button__text {
+        // color: black;
+      }
+      .van-button--round .van-button__text {
+        color: red;
+      }
     }
   }
   .my_row {

@@ -2,7 +2,7 @@
   <div id="home">
     <van-nav-bar title="首页" />
 
-    <van-tabs v-model="active" @change="tabChange" class="my_tabs">
+    <van-tabs v-model="tabActive" @change="tabChange" class="my_tabs">
       <van-tab v-for="(e,i) in channels" :key="i" :title="e.name">
         <van-pull-refresh v-model="pullLoading" @refresh="onRefresh">
           <van-list v-model="loading" :finished="finished" finished-text="已经到底了!" @load="onLoad">
@@ -14,7 +14,7 @@
         <van-icon name="ellipsis" @click="changeShow=true"/>
       </div>
     </van-tabs>
-    <channel v-model="changeShow" :channels="channels"></channel>
+    <channel v-model="changeShow" :channels="channels" :active.sync="tabActive"></channel>
   </div>
 </template>
 
@@ -29,10 +29,10 @@ export default {
   },
   data() {
     return {
-      changeShow:true,
+      changeShow:false,
       pullLoading: false,
       channels: [],
-      active: 0,
+      tabActive: 0,
       articleList: [],
       loading: false,
       finished: false
@@ -62,7 +62,7 @@ export default {
     //   获取频道文章
     async getArticle() {
       let data = {
-        channel_id: this.channels[this.active].id,
+        channel_id: this.channels[this.tabActive].id,
         timestamp: Date.now(),
         with_top: 1
       };
