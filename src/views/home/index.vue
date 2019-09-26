@@ -14,7 +14,7 @@
         <van-icon name="ellipsis" @click="changeShow=true"/>
       </div>
     </van-tabs>
-    <channel v-model="changeShow" :channels="channels" :active.sync="tabActive"></channel>
+    <channel :show.sync="changeShow" :channels="channels" :active.sync="tabActive"></channel>
   </div>
 </template>
 

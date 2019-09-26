@@ -2,13 +2,12 @@
   <div>
     <van-popup
       v-model="show"
-      @close="$emit('changeShow',false)"
-      closeable
       round
       close-icon-position="top-right"
       position="bottom"
       :style="{ height: '95%' }"
     >
+    <van-row class="cross_row"><van-icon name="cross" @click="$emit('update:show',false)" /></van-row>
       <van-row class="my_row">
         <van-col span="12">我的频道</van-col>
         <van-col class="editBtn" span="12">
@@ -59,10 +58,6 @@ import { getAllChannel, setChannel } from "@/api/channel.js";
 export default {
   name: "channel",
   props: ["show", "channels", "active"],
-  model: {
-    prop: "show",
-    event: "changeShow"
-  },
   data() {
     return {
       AllChannel: [],
@@ -123,6 +118,11 @@ export default {
 .van-popup {
   padding: 20px;
   box-sizing: border-box;
+  .cross_row.van-row{
+    text-align: right;
+    font-size: 20px;  
+    margin: 0;
+  }
   .van-row {
     margin-top: 15px;
     font-size: 14px;
