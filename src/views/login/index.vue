@@ -79,7 +79,10 @@ export default {
     },
     code_verify() {
       if (!/^\d{6}$/.test(this.form.code)) {
-        this.$toast("请输入正确验证码!");
+        this.$toast({
+          position: "middle",
+          message: "请输入正确验证码!"
+        });
         this.isCode = false;
         return;
       } else {
@@ -109,7 +112,7 @@ export default {
             message: "账号或验证码错误!"
           });
         }
-      }
+      } 
     }
   }
 };

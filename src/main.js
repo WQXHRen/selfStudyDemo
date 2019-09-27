@@ -7,6 +7,7 @@ import './assets/base.css'
 // 导入vant
 import Vant from 'vant';
 import 'vant/lib/index.css';
+Vue.prototype.$toast.allowMultiple()
 Vue.use(Vant);
 
 import 'amfe-flexible'

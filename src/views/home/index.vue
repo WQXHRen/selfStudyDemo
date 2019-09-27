@@ -1,7 +1,6 @@
 <template>
   <div id="home">
     <van-nav-bar title="首页" />
-
     <van-tabs v-model="tabActive" @change="tabChange" class="my_tabs">
       <van-tab v-for="(e,i) in channels" :key="i" :title="e.name">
         <van-pull-refresh v-model="pullLoading" @refresh="onRefresh">
@@ -11,7 +10,7 @@
         </van-pull-refresh>
       </van-tab>
       <div class="tab_right_btn">
-        <van-icon name="ellipsis" @click="changeShow=true"/>
+        <van-icon name="ellipsis" @click="changeShow=true" />
       </div>
     </van-tabs>
     <channel :show.sync="changeShow" :channels="channels" :active.sync="tabActive"></channel>
@@ -21,15 +20,15 @@
 <script>
 import { getChannel } from "../../api/channel";
 import { Article } from "../../api/getArticle";
-import channel from "./channel.vue"
+import channel from "./channel.vue";
 export default {
   name: "home",
-  components:{
+  components: {
     channel
   },
   data() {
     return {
-      changeShow:false,
+      changeShow: false,
       pullLoading: false,
       channels: [],
       tabActive: 0,
@@ -44,7 +43,7 @@ export default {
       this.articleList = [];
       this.finished = false;
       let res = await this.getArticle();
-    //   console.log(res);
+      //   console.log(res);
       this.articleList.push(...res.data.data.results);
       if (res.data.data.results.length == 0) {
         this.finished = true;
@@ -93,9 +92,12 @@ export default {
 #home {
   margin-top: 90px;
   margin-bottom: 44px;
+  .van-nav-bar{
+    height: 45.6px;
+  }
   /deep/.van-tabs__wrap {
     position: fixed;
-    top: 46px;
+    top: 45.6px;
     left: 0;
     width: 87%;
     z-index: 998;

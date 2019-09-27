@@ -2,6 +2,7 @@
   margin-top: 46px;
 }
 #login .input_wrap {
+  margin-top: 20%;
   padding: 20px;
 }
 #login .input_wrap .mobile,
@@ -18,7 +19,7 @@
 #login .input_wrap .yanzhengma {
   height: 35px;
   display: inline-block;
-  border-left: 1px solid #EDEDED;
+  border-left: 1px solid #202529;
 }
 #login .input_wrap .yanzhengma button {
   background-color: #EDEDED;
@@ -35,7 +36,7 @@
 #login .input_wrap .code_wrap {
   height: 40px;
   margin-bottom: 10px;
-  border-bottom: 1px solid #EDEDED;
+  border-bottom: 1px solid #202529;
 }
 #login .input_wrap .code_wrap {
   border: none;

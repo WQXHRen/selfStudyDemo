@@ -7,7 +7,9 @@
       position="bottom"
       :style="{ height: '95%' }"
     >
-    <van-row class="cross_row"><van-icon name="cross" @click="$emit('update:show',false)" /></van-row>
+      <van-row class="cross_row">
+        <van-icon name="cross" @click="$emit('update:show',false)" />
+      </van-row>
       <van-row class="my_row">
         <van-col span="12">我的频道</van-col>
         <van-col class="editBtn" span="12">
@@ -57,7 +59,9 @@
 import { getAllChannel, setChannel } from "@/api/channel.js";
 export default {
   name: "channel",
+
   props: ["show", "channels", "active"],
+
   data() {
     return {
       AllChannel: [],
@@ -65,6 +69,7 @@ export default {
       editText: "编辑"
     };
   },
+
   methods: {
     //   删除频道
     doDel(item) {
@@ -85,30 +90,40 @@ export default {
       this.isEdit = !this.isEdit;
       this.editText = this.isEdit ? "完成" : "编辑";
     },
+
     addChannel(ele) {
       this.channels.push(ele);
     }
   },
+
   async created() {
     let res = await getAllChannel();
     // console.log(res);
     this.AllChannel = res.data.data.channels;
   },
+
   computed: {
     otherChannel() {
-      let otherChannel = [];
-      for (var i = 0; i < this.AllChannel.length; i++) {
-        let flag = true;
-        for (var j = 0; j < this.channels.length; j++) {
-          if (this.AllChannel[i].id == this.channels[j].id) {
-            flag = false;
-          }
-        }
-        if (flag) {
-          otherChannel.push(this.AllChannel[i]);
-        }
-      }
-      return otherChannel;
+      // let otherChannel = [];
+      // for (var i = 0; i < this.AllChannel.length; i++) {
+      //   let flag = true;
+      //   for (var j = 0; j < this.channels.length; j++) {
+      //     if (this.AllChannel[i].id == this.channels[j].id) {
+      //       flag = false;
+      //     }
+      //   }
+      //   if (flag) {
+      //     otherChannel.push(this.AllChannel[i]);
+      //   }
+      // }
+      // return otherChannel;
+      // 取得我的频道的id数组
+      let ids = this.channels.map(item => item.id);
+
+      //filter 返回 一个新数组 包含了满足条件的true 的所有元素
+      let otherChannel = this.AllChannel.filter(item => !ids.includes(item.id));
+      
+      return otherChannel
     }
   }
 };
@@ -118,9 +133,9 @@ export default {
 .van-popup {
   padding: 20px;
   box-sizing: border-box;
-  .cross_row.van-row{
+  .cross_row.van-row {
     text-align: right;
-    font-size: 20px;  
+    font-size: 20px;
     margin: 0;
   }
   .van-row {
@@ -133,16 +148,13 @@ export default {
         top: -8px;
         right: -8px;
       }
-      .van-button__text {
-        // color: black;
-      }
       .van-button--round .van-button__text {
         color: red;
       }
     }
   }
   .my_row {
-    margin-top: 40px;
+    margin-top: 5px;
     .editBtn {
       text-align: right;
     }

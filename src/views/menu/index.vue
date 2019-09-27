@@ -1,7 +1,7 @@
 <template>
   <div>
-    <router-view></router-view>
-    <van-tabbar v-model="active"  active-color="#000"
+    <router-view ></router-view>
+    <van-tabbar class="menu-tabbar" v-model="active"  active-color="#000"
   inactive-color="#CBCBCB">
       <van-tabbar-item icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item icon="comment-o">问答</van-tabbar-item>
@@ -21,5 +21,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped> 
+.menu-tabbar{
+  border-top: 1px solid black !important;
+}
+
 </style>
