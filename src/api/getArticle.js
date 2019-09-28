@@ -13,3 +13,10 @@ export const dislikes = (id)=>{
         target:id
     })
 }
+
+// 拉黑用户
+export const pullBlack = (autId)=>{
+    return http.post('/app/v1_0/user/blacklists',{
+        target:autId
+    })
+}

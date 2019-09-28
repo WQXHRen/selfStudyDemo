@@ -9,7 +9,7 @@
       <van-cell-group v-if="noLike">
         <van-cell title="不喜欢此文章" icon="location-o" @click="dislikes" />
         <van-cell title="举报" is-link icon="location-o" @click="noLike=false" />
-        <van-cell title="拉黑" icon="location-o" />
+        <van-cell title="拉黑" icon="location-o" @click="pullBlack" />
       </van-cell-group>
 
       <van-cell-group v-else>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { dislikes } from "@/api/getArticle.js";
+import { dislikes, pullBlack } from "@/api/getArticle.js";
 export default {
   name: "inform",
   props: ["showDialog", "item", "artList"],
@@ -42,6 +42,23 @@ export default {
     };
   },
   methods: {
+    //   拉黑用户
+    async pullBlack() {
+      let res = await pullBlack(this.item.aut_id);
+      for (var i = 0; i < this.artList.length; i++) {
+        if (this.artList[i].aut_id == this.item.aut_id) {
+          this.artList.splice(i, 1);
+          i--;
+        }
+      }
+
+      if (res.status == 201) {
+        this.$toast("拉黑成功!");
+      } else {
+        this.$toast("拉黑失败!");
+      }
+      this.$emit("update:showDialog", false);
+    },
     //   不感兴趣
     async dislikes() {
       let res = await dislikes(this.item.art_id);
