@@ -15,6 +15,20 @@ import 'amfe-flexible'
 import { Notify } from 'vant';
 Vue.use(Notify);
 
+import dayjs from 'dayjs'
+// 导入相对时间的插件
+import relativeTime from 'dayjs/plugin/relativeTime'
+// 加载这个插件
+dayjs.extend(relativeTime)
+// 导入中文包
+import 'dayjs/locale/zh-cn'
+// 使用中文包
+dayjs.locale('zh-cn')
+
+Vue.filter('relvTime',(value) => {
+   return dayjs(value).from( dayjs() );
+})  
+
 import './assets/navbar.less'
 Vue.config.productionTip = false
 

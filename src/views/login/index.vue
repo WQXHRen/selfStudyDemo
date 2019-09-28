@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       form: {
-        mobile: "13911111111",
+        mobile: "18801185989",
         code: "246810"
       },
       isMoblie: false,

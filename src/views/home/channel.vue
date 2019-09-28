@@ -57,6 +57,7 @@
 
 <script>
 import { getAllChannel, setChannel } from "@/api/channel.js";
+import { saveChannel } from "@/storage/index.js";
 export default {
   name: "channel",
 
@@ -81,11 +82,16 @@ export default {
         let channels = this.channels.slice(1).map((item, index) => {
           return {
             id: item.id,
-            seq: index + 1
+            seq: index + 1,
+            name:item.name
           };
         });
 
-        let res = await setChannel(channels);
+        try {
+          let res = await setChannel(channels);
+        } catch {
+          saveChannel(this.channels)
+        }
       }
       this.isEdit = !this.isEdit;
       this.editText = this.isEdit ? "完成" : "编辑";
@@ -122,8 +128,8 @@ export default {
 
       //filter 返回 一个新数组 包含了满足条件的true 的所有元素
       let otherChannel = this.AllChannel.filter(item => !ids.includes(item.id));
-      
-      return otherChannel
+
+      return otherChannel;
     }
   }
 };
