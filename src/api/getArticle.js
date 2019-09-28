@@ -5,3 +5,11 @@ export const Article = (data)=>{
         params:data
     })
 }
+
+
+// 不喜欢文章
+export const dislikes = (id)=>{
+    return http.post('/app/v1_0/article/dislikes',{
+        target:id
+    })
+}

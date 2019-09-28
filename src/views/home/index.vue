@@ -22,7 +22,7 @@
                   <span class="ati_info">作者:{{item.aut_name}}</span>
                   <span class="ati_info">评论:{{item.comm_count}}</span>
                   <span class="ati_info">{{item.pubdate | relvTime}}</span>
-                  <van-icon style="float:right" name="ellipsis" @click="dialogShow=true"/>
+                  <van-icon style="float:right" name="ellipsis" @click="dialog(item)" />
                 </div>
               </template>
             </van-cell>
@@ -34,7 +34,7 @@
       </div>
     </van-tabs>
     <channel :show.sync="changeShow" :channels="channels" :active.sync="tabActive"></channel>
-    <inform :showDialog.sync="dialogShow"></inform>
+    <inform :showDialog.sync="dialogShow" :item="item" :artList="articleList"></inform>
   </div>
 </template>
 
@@ -64,10 +64,17 @@ export default {
       tabActive: 0,
       articleList: [],
       loading: false,
-      finished: false
+      finished: false,
+      item:""
     };
   },
   methods: {
+    // 点击打开弹窗和传值
+    dialog(item){
+      this.item = item
+      this.dialogShow = true;
+    },
+
     //   点击别的tab
     async tabChange() {
       this.articleList = [];

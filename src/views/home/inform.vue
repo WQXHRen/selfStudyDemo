@@ -7,13 +7,13 @@
       :closeOnClickOverlay="true"
     >
       <van-cell-group v-if="noLike">
-        <van-cell title="不喜欢此文章" icon="location-o" />
+        <van-cell title="不喜欢此文章" icon="location-o" @click="dislikes" />
         <van-cell title="举报" is-link icon="location-o" @click="noLike=false" />
         <van-cell title="拉黑" icon="location-o" />
       </van-cell-group>
 
       <van-cell-group v-else>
-        <van-cell icon="arrow-left" @click="noLike=true"/>
+        <van-cell icon="arrow-left" @click="noLike=true" />
         <van-cell v-for="item in informList" :title="item" icon="location-o" />
       </van-cell-group>
     </van-dialog>
@@ -21,8 +21,10 @@
 </template>
 
 <script>
+import { dislikes } from "@/api/getArticle.js";
 export default {
-  props: ["showDialog"],
+  name: "inform",
+  props: ["showDialog", "item", "artList"],
   data() {
     return {
       noLike: true,
@@ -40,6 +42,18 @@ export default {
     };
   },
   methods: {
+    //   不感兴趣
+    async dislikes() {
+      let res = await dislikes(this.item.art_id);
+      //  console.log(res);
+      this.$emit("update:showDialog", false);
+      this.artList.forEach((item, index) => {
+        if (item.art_id == this.item.art_id) {
+          this.artList.splice(index, 1);
+        }
+      });
+    },
+    //   关闭弹窗
     close(action, done) {
       this.$emit("update:showDialog", false);
       done();
