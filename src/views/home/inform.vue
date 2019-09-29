@@ -14,14 +14,19 @@
 
       <van-cell-group v-else>
         <van-cell icon="arrow-left" @click="noLike=true" />
-        <van-cell v-for="item in informList" :title="item" icon="location-o" />
+        <van-cell
+          v-for="(item,index) in informList"
+          :title="item"
+          icon="location-o"
+          @click="reports(index)"
+        />
       </van-cell-group>
     </van-dialog>
   </div>
 </template>
 
 <script>
-import { dislikes, pullBlack } from "@/api/getArticle.js";
+import { dislikes, pullBlack, reportsArt } from "@/api/getArticle.js";
 export default {
   name: "inform",
   props: ["showDialog", "item", "artList"],
@@ -38,10 +43,31 @@ export default {
         "内容不实",
         "涉嫌违法犯罪",
         "侵权"
-      ]
+      ],
+      remark: ""
     };
   },
   methods: {
+    //   举报文章
+    async reports(type) {
+      let params = {
+        target: this.item.art_id,
+        type,
+        remark: this.remark
+      };
+      let res = await reportsArt(params);
+      
+      this.artList.forEach((item,index)=>{
+        if (item.art_id==this.item.art_id) {
+           this.artList.splice(index,1)
+        }
+      })
+      this.$emit("update:showDialog", false);
+      if (res.status == 201) {
+        this.$toast("举报成功!");
+      }
+    },
+
     //   拉黑用户
     async pullBlack() {
       let res = await pullBlack(this.item.aut_id);

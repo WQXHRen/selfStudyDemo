@@ -20,3 +20,8 @@ export const pullBlack = (autId)=>{
         target:autId
     })
 }
+
+// 举报文章
+export const reportsArt = (obj)=>{
+    return http.post('/app/v1_0/article/reports',obj)
+}
