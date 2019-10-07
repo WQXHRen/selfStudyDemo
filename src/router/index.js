@@ -5,6 +5,7 @@ import home from '../views/home/index.vue'
 import mune from '../views/menu/index.vue'
 import search from '../views/search/index.vue'
 import results from '../views/results/index.vue'
+import details from '../views/details/index.vue'
 
 Vue.use(Router)
 
@@ -24,7 +25,6 @@ export default new Router({
       component:results
 
     },
-
     {
       path: '',
       redirect: '/login'
@@ -41,6 +41,10 @@ export default new Router({
       path: '/mune',
       redirect: '/home'
     },
+    {
+      path:'/details/:art_id',
+      component:details
+    }
     
 
   ]

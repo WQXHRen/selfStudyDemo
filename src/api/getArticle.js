@@ -25,3 +25,8 @@ export const pullBlack = (autId)=>{
 export const reportsArt = (obj)=>{
     return http.post('/app/v1_0/article/reports',obj)
 }
+
+// 文章详情
+export const getDetails = (art_id)=>{
+    return http.get('/app/v1_0/articles/'+art_id)
+}

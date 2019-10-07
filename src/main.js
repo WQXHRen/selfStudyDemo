@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 
+// 导入自定义的确认弹窗插件
+import dialog from './utils/plugin/index.js'
+
+Vue.use(dialog);
 import './assets/base.css'
 // 导入vant
 import Vant from 'vant';

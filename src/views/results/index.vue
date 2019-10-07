@@ -1,13 +1,13 @@
 <template>
   <div id="results">
-    <van-nav-bar title="搜索结果" left-arrow @click-left="onClickLeft"/>
+    <van-nav-bar title="搜索结果" left-arrow @click-left="onClickLeft" />
     <van-cell-group>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <van-cell v-for="item in resultList" :title="item.title">
           <template slot="label">
-            <p>{{item.aut_name}}</p>
+            <p @click="$router.push('/details/'+item.art_id)">{{item.aut_name}}</p>
             <van-grid :column-num="3">
-              <van-grid-item text="评论" />
+              <van-grid-item text="评论" @click="$isLogin" />
               <van-grid-item text="点赞" />
               <van-grid-item text="收藏" />
             </van-grid>
@@ -33,8 +33,8 @@ export default {
   },
   methods: {
     //   返回
-    onClickLeft(){
-    this.$router.push('/search');
+    onClickLeft() {
+      this.$router.push("/search");
     },
 
     async onLoad() {
@@ -47,11 +47,11 @@ export default {
       };
       let res = await toSearch(data);
       this.page++;
-        console.log(res);
+      console.log(res);
       this.resultList.push(...res.data.data.results);
       this.loading = false;
       console.log(res.data.data.total_count);
-      
+
       if (Math.ceil(res.data.data.total_count / this.per_page) < this.page) {
         console.log(11);
 
