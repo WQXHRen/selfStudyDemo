@@ -4,21 +4,17 @@
     <van-cell-group>
       <van-cell>
         <template slot="title">
-          <h3>123</h3>
+          <h2>{{art_details.title}}</h2>
         </template>
       </van-cell>
 
       <!-- 作者信息 -->
-      <author></author>
+      <author :art_details=art_details></author>
 
       <!-- 正文 -->
       <van-cell>
         <template slot="title">
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis rerum sequi maiores aliquam ex! Culpa odio dolorem rem aspernatur dignissimos, dicta tempore optio corporis excepturi sunt ea pariatur perspiciatis impedit?
-            Exercitationem, obcaecati, rem corrupti optio explicabo blanditiis voluptates itaque reiciendis nisi atque, minus accusamus! Quasi accusantium, atque nihil minima autem et at laudantium doloribus fugiat vel, voluptates laboriosam amet culpa.
-            Explicabo quia quas architecto unde. Eveniet dolore hic voluptate temporibus eius optio sapiente mollitia officia odit nam, perferendis modi iusto officiis maiores veritatis voluptatem ut dicta similique in dolor ad.
-            Obcaecati quos libero fugit modi, facilis officiis assumenda, ipsa voluptatibus natus laboriosam repellendus commodi ratione! Doloremque iure voluptatum facere ut distinctio sapiente minus, possimus dolorum quaerat illum ab. Odit, voluptatibus?
+          <div v-html="art_details.content">
           </div>
         </template>
       </van-cell>
