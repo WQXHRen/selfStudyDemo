@@ -30,7 +30,7 @@
         </van-pull-refresh>
       </van-tab>
       <div class="tab_right_btn">
-        <van-icon name="plus" @click="changeShow" />
+        <van-icon name="plus" @click="changeShow=true" />
       </div>
     </van-tabs>
     <channel :show.sync="changeShow" :channels="channels" :active.sync="tabActive"></channel>
