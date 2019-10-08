@@ -9,7 +9,7 @@
               v-for="(item,index) in articleList"
               :key="index"
               :title="item.title"
-              label="描述信息"
+              @click="$router.push('/details/'+item.art_id)"
             >
               <template slot="label">
                 <van-grid :border="false" :column-num="3" v-if="item.cover.type>0">

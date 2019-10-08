@@ -9,52 +9,38 @@
       </van-cell>
 
       <!-- 作者信息 -->
-      <author :art_details=art_details></author>
+      <author :art_details="art_details"></author>
 
       <!-- 正文 -->
       <van-cell>
         <template slot="title">
-          <div v-html="art_details.content">
-          </div>
+          <div class="content" v-html="art_details.content"></div>
         </template>
       </van-cell>
 
-      <!-- 点赞,喜欢 -->
-      <van-cell>
+      <!-- 点赞 -->
+      <van-cell :border="false">
         <template slot="title">
-          <van-button size="small" icon="star-o" type="danger">点赞</van-button>
-          <van-button size="small" icon="like-o">不喜欢</van-button>
+          <div class="artZan" @click="islike">
+            <van-icon
+              :name="Zan==1?'good-job':'good-job-o'"
+              size="20px"
+              :color="Zan==1?'red':'inherit'"
+            />
+            <span :class="{DZan:Zan==1}">&nbsp;{{Zan==1?'取消赞':'点赞'}}</span>
+          </div>
         </template>
       </van-cell>
 
       <!-- 用户评论 -->
-      <van-cell>
-        <template slot="title">
-          <div class="aut_info">
-            <div>
-              <img src alt />
-            </div>
-            <van-cell>
-              <template slot="title">
-                <span>匿名用户</span>
-                <br />
-                <span>评论的内容</span>
-                <br />
-                <span>
-                  1个月前&nbsp;&nbsp;
-                  <span>回复</span>
-                </span>
-              </template>
-            </van-cell>
-            <van-button size="small" icon="good-job-o">666</van-button>
-          </div>
-        </template>
-      </van-cell>
+      <van-list v-model="isLoading" :finished="isfinished" finished-text="没有更多了" @load="onLoad">
+       <comment :details="art_details"></comment>
+      </van-list>
 
       <!-- 写评论 -->
-      <van-cell>
+      <van-cell class="comment">
         <div class="commentBox">
-          <van-field class="commentIpt" autosize  left-icon="edit" placeholder="写评论" />
+          <van-field class="commentIpt" autosize left-icon="edit" placeholder="写评论" />
           <van-button type="danger" size="small">发送</van-button>
           <van-button icon="star-o" size="small"></van-button>
         </div>
@@ -65,20 +51,43 @@
 
 <script>
 import { getDetails } from "@/api/getArticle.js";
+import { likeArt, unLikeArt } from "@/api/user.js";
 import author from "./components/author.vue";
+import comment from "./components/comment.vue"
 export default {
   name: "Details",
-  components: { author },
+  components: { author,comment },
   data() {
     return {
       art_id: this.$route.params.art_id,
-      art_details: ""
+      art_details: "",
+      Zan: "",
+      isLoading:false,
+      isfinished:true
     };
+  },
+  methods: {
+    // 评论列表
+    onLoad(){
+
+    },
+    // 点赞文章
+    async islike() {
+      if (this.Zan == 1) {
+        let res = await unLikeArt(this.art_details.art_id.toString());
+        this.Zan = -1;
+      } else {
+        let res = await likeArt(this.art_details.art_id.toString());
+        this.Zan = 1;
+      }
+    }
   },
   async created() {
     let res = await getDetails(this.art_id);
     console.log(res);
     this.art_details = res.data.data;
+
+    this.Zan = this.art_details.attitude;
   }
 };
 </script>
@@ -86,17 +95,33 @@ export default {
 <style lang="less" scoped>
 #details {
   margin-top: 46px;
+  margin-bottom: 54px;
   .van-icon-arrow-left {
     color: white;
   }
-  .commentBox {
+  /deep/ .content img {
+    max-width: 100%;
+  }
+  .comment {
+    position: fixed;
+    bottom: 0;
+    .commentBox {
+      display: flex;
+      align-items: center;
+      .commentIpt {
+        background-color: #eee;
+        border-radius: 22px;
+        margin-right: 10px;
+        padding: 5px 8px;
+      }
+    }
+  }
+  .artZan {
     display: flex;
     align-items: center;
-    .commentIpt {
-      background-color: #eee;
-      border-radius: 22px;
-      margin-right: 10px;
-      padding: 5px 8px;
+    justify-content: center;
+    .DZan {
+      color: red;
     }
   }
 }
