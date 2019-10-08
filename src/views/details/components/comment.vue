@@ -8,17 +8,26 @@
           </div>
           <van-cell>
             <template slot="title">
-              <span>{{details.aut_name}}</span>
-              <br />
-              <span v-html="details.content"></span>
-              <br />
-              <span>
-               {{details.pubdate | relvTime}}&nbsp;&nbsp;
-                <span>回复</span>
-              </span>
+              <p
+                style="fontSize:14px;margin:2.5px;font-weight:550;line-height:1.3"
+              >{{details.aut_name}}</p>
+
+              <p style="fontSize:12px;margin:2.5px;line-height:1.1" v-html="details.content"></p>
+
+              <p style="fontSize:10px;margin:3px;line-height:1;color:#ccc;">
+                {{details.pubdate | relvTime}}&nbsp;&nbsp;
+                <span
+                  style="color:#202529;float:right"
+                >回复({{details.reply_count}})</span>
+              </p>
             </template>
           </van-cell>
-          <van-button size="small" icon="good-job-o">666</van-button>
+          <van-button
+            @click="doZan"
+            :class="details.is_liking?'Zan':''"
+            size="small"
+            :icon="details.is_liking?'good-job':'good-job-o'"
+          >{{details.like_count}}</van-button>
         </div>
       </template>
     </van-cell>
@@ -27,15 +36,35 @@
 
 <script>
 export default {
-    name:"cmt",
-    props:['details']
+  name: "cmt",
+  props: ["details"],
+  methods: {
+    doZan() {
+      if (this.details.is_liking) {
+        this.details.like_count--;
+      } else {
+        this.details.like_count++;
+      }
+      this.details.is_liking = !this.details.is_liking;
+    }
+  }
 };
 </script>
 
-<style>
-.aut_photo{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%
+<style scoped>
+.aut_photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.aut_info {
+  display: flex;
+  align-items: center;
+}
+.van-cell {
+  padding: 0px 15px 2px !important;
+}
+.Zan {
+  color: red;
 }
 </style>

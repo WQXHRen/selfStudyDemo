@@ -34,7 +34,7 @@
 
       <!-- 用户评论 -->
       <van-list v-model="isLoading" :finished="isfinished" finished-text="没有更多了" @load="onLoad">
-       <comment :details="art_details"></comment>
+        <comment v-for="item in this.commentList" :details="item"></comment>
       </van-list>
 
       <!-- 写评论 -->
@@ -52,39 +52,53 @@
 <script>
 import { getDetails } from "@/api/getArticle.js";
 import { likeArt, unLikeArt } from "@/api/user.js";
+import { getCmt } from "@/api/comment.js";
 import author from "./components/author.vue";
-import comment from "./components/comment.vue"
+import comment from "./components/comment.vue";
 export default {
   name: "Details",
-  components: { author,comment },
+  components: { author, comment },
   data() {
     return {
       art_id: this.$route.params.art_id,
       art_details: "",
       Zan: "",
-      isLoading:false,
-      isfinished:true
+      isLoading: false,
+      isfinished: false,
+      commentList: [],
+      query: {
+        type: "a",
+        source: this.$route.params.art_id,
+        offset: undefined,
+        limit: 10
+      }
     };
   },
   methods: {
     // 评论列表
-    onLoad(){
-
+    async onLoad() {
+      let res = await getCmt(this.query);
+        // console.log(res);
+      this.query.offset = res.data.data.last_id;
+      this.commentList.push(...res.data.data.results);
+      if (res.data.data.last_id == res.data.data.end_id) {
+        this.isfinished = true;
+      }
+      this.isLoading = false;
     },
     // 点赞文章
     async islike() {
       if (this.Zan == 1) {
-        let res = await unLikeArt(this.art_details.art_id.toString());
+        await unLikeArt(this.art_details.art_id.toString());
         this.Zan = -1;
       } else {
-        let res = await likeArt(this.art_details.art_id.toString());
+        await likeArt(this.art_details.art_id.toString());
         this.Zan = 1;
       }
     }
   },
   async created() {
     let res = await getDetails(this.art_id);
-    console.log(res);
     this.art_details = res.data.data;
 
     this.Zan = this.art_details.attitude;
