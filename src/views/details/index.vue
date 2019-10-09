@@ -38,13 +38,7 @@
       </van-list>
 
       <!-- 写评论 -->
-      <van-cell class="comment">
-        <div class="commentBox">
-          <van-field class="commentIpt" autosize left-icon="edit" placeholder="写评论" v-model="content"/>
-          <van-button type="danger" size="small">发送</van-button>
-          <van-button icon="star-o" size="small"></van-button>
-        </div>
-      </van-cell>
+      <sendCmt :details="art_details" @add="commentList.unshift($event)"></sendCmt>
     </van-cell-group>
   </div>
 </template>
@@ -53,11 +47,12 @@
 import { getDetails } from "@/api/getArticle.js";
 import { likeArt, unLikeArt } from "@/api/user.js";
 import { getCmt } from "@/api/comment.js";
-import author from "./components/author.vue";
-import comment from "./components/comment.vue";
+import author from "./components/author";
+import comment from "./components/comment";
+import sendCmt from "./components/sendCmt";
 export default {
   name: "Details",
-  components: { author, comment },
+  components: { author, comment, sendCmt },
   data() {
     return {
       art_id: this.$route.params.art_id,
@@ -71,15 +66,14 @@ export default {
         source: this.$route.params.art_id,
         offset: undefined,
         limit: 10
-      },
-      content:""
+      }
     };
   },
   methods: {
     // 评论列表
     async onLoad() {
       let res = await getCmt(this.query);
-        // console.log(res);
+      // console.log(res);
       this.query.offset = res.data.data.last_id;
       this.commentList.push(...res.data.data.results);
       if (res.data.data.last_id == res.data.data.end_id) {
@@ -117,20 +111,7 @@ export default {
   /deep/ .content img {
     max-width: 100%;
   }
-  .comment {
-    position: fixed;
-    bottom: 0;
-    .commentBox {
-      display: flex;
-      align-items: center;
-      .commentIpt {
-        background-color: #eee;
-        border-radius: 22px;
-        margin-right: 10px;
-        padding: 5px 8px;
-      }
-    }
-  }
+
   .artZan {
     display: flex;
     align-items: center;
