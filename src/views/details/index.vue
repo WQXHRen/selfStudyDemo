@@ -34,11 +34,14 @@
 
       <!-- 用户评论 -->
       <van-list v-model="isLoading" :finished="isfinished" finished-text="没有更多了" @load="onLoad">
-        <comment v-for="item in commentList" :details="item"></comment>
+        <comment v-for="item in commentList" :details="item" @currentCmt="currentCmt = $event"></comment>
       </van-list>
 
-      <!-- 写评论 -->
-      <sendCmt :details="art_details" @add="commentList.unshift($event)"></sendCmt>
+      <!-- 发表评论 -->
+      <sendCmt :id="art_details.art_id" :art_id="undefined" @add="commentList.unshift($event)"></sendCmt>
+
+      <!-- 回复评论 -->
+      <replyCmt :details="currentCmt" :art_id="art_id"></replyCmt>
     </van-cell-group>
   </div>
 </template>
@@ -50,11 +53,13 @@ import { getCmt } from "@/api/comment.js";
 import author from "./components/author";
 import comment from "./components/comment";
 import sendCmt from "./components/sendCmt";
+import replyCmt from "./components/replyCmt";
 export default {
   name: "Details",
-  components: { author, comment, sendCmt },
+  components: { author, comment, sendCmt, replyCmt },
   data() {
     return {
+      currentCmt: {},
       art_id: this.$route.params.art_id,
       art_details: "",
       Zan: "",

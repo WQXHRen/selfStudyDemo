@@ -12,7 +12,7 @@
 import { sendCmt } from "@/api/comment.js";
 export default {
   name: "sendCmt",
-  props: ["details"],
+  props: ["id","art_id"],
   data() {
     return {
       content: ""
@@ -26,9 +26,9 @@ export default {
         return;
       }
       let res = await sendCmt({
-        target: this.details.art_id,
+        target: this.id,
         content: this.content,
-        art_id: undefined
+        art_id: this.art_id
       });
       this.$emit("add", res.data.data.new_obj);
       this.content = "";

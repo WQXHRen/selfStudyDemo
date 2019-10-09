@@ -17,7 +17,7 @@
               <p style="fontSize:10px;margin:3px;line-height:1;color:#ccc;">
                 {{details.pubdate | relvTime}}&nbsp;&nbsp;
                 <span
-                  style="color:#202529;float:right"
+                  style="color:#202529;float:right" @click="showPopup"
                 >回复({{details.reply_count}})</span>
               </p>
             </template>
@@ -40,6 +40,14 @@ export default {
   name: "cmt",
   props: ["details"],
   methods: {
+    // 点击恢复评论
+    showPopup(){
+      this.$emit("currentCmt",{
+        cmt:this.details,
+        replyShow:true
+      })
+    },
+
     // 点赞评论
     async doZan() {
       if (this.details.is_liking) {
