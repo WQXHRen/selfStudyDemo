@@ -6,6 +6,7 @@ import mune from '../views/menu/index.vue'
 import search from '../views/search/index.vue'
 import results from '../views/results/index.vue'
 import details from '../views/details/index.vue'
+import mine from "../views/mine/index.vue"
 
 Vue.use(Router)
 
@@ -35,6 +36,9 @@ export default new Router({
       children: [{
         path: '/home',
         component: home
+      },{
+        path:'/mine',
+        component:mine
       }]
     }, 
     {

@@ -113,10 +113,12 @@ export default {
   .van-icon-arrow-left {
     color: white;
   }
-  /deep/ .content img {
-    max-width: 100%;
+  /deep/ .content {
+    word-break: break-all;
+    img {
+      max-width: 100%;
+    }
   }
-
   .artZan {
     display: flex;
     align-items: center;
