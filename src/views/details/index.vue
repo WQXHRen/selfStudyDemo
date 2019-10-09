@@ -18,7 +18,7 @@
         </template>
       </van-cell>
 
-      <!-- 点赞 -->
+      <!-- 点赞文章 -->
       <van-cell :border="false">
         <template slot="title">
           <div class="artZan" @click="islike">
@@ -34,13 +34,13 @@
 
       <!-- 用户评论 -->
       <van-list v-model="isLoading" :finished="isfinished" finished-text="没有更多了" @load="onLoad">
-        <comment v-for="item in this.commentList" :details="item"></comment>
+        <comment v-for="item in commentList" :details="item"></comment>
       </van-list>
 
       <!-- 写评论 -->
       <van-cell class="comment">
         <div class="commentBox">
-          <van-field class="commentIpt" autosize left-icon="edit" placeholder="写评论" />
+          <van-field class="commentIpt" autosize left-icon="edit" placeholder="写评论" v-model="content"/>
           <van-button type="danger" size="small">发送</van-button>
           <van-button icon="star-o" size="small"></van-button>
         </div>
@@ -71,7 +71,8 @@ export default {
         source: this.$route.params.art_id,
         offset: undefined,
         limit: 10
-      }
+      },
+      content:""
     };
   },
   methods: {

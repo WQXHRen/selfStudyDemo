@@ -35,14 +35,19 @@
 </template>
 
 <script>
+import { likeCmt, unLikeCmt } from "@/api/comment.js";
 export default {
   name: "cmt",
   props: ["details"],
   methods: {
-    doZan() {
+    // 点赞评论
+    async doZan() {
       if (this.details.is_liking) {
+        await unLikeCmt(this.details.com_id);
         this.details.like_count--;
       } else {
+        await likeCmt(this.details.com_id);
+
         this.details.like_count++;
       }
       this.details.is_liking = !this.details.is_liking;
