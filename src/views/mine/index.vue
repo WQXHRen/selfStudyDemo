@@ -4,12 +4,12 @@
     <div class="top">
       <div class="topBg">
         <!-- 上上 -->
-        <div class="top_top">
+        <div class="top_top" @click="$router.push('/profile')">
           <div>
-            <img class="photo" src="../../../../../vscode插件描述.jpg" alt />
+            <img class="photo" :src="user.photo" alt />
           </div>
           <div class="userName">
-            <div>黑马小工具</div>
+            <div>{{user.name}}</div>
             <van-button class="V-btn" color="black" plain round size="mini">认证工具</van-button>
           </div>
           <div class="read">
@@ -21,15 +21,15 @@
         <!-- 上下 -->
         <div class="top_bottom">
           <div class="t_b">
-            <div>8</div>
+            <div>{{user.art_count}}</div>
             <div>动态</div>
           </div>
           <div class="t_b">
-            <div>8</div>
+            <div>{{user.follow_count}}</div>
             <div>关注</div>
           </div>
           <div class="t_b">
-            <div>8</div>
+            <div>{{user.fans_count}}</div>
             <div>粉丝</div>
           </div>
         </div>
@@ -66,7 +66,23 @@
 </template>
 
 <script>
-export default {};
+import { getUser } from "@/api/user.js"
+export default {
+  name:"mine",
+  data(){
+    return {
+      user:{}
+    }
+  },
+  methods:{
+
+  },
+  async created(){
+    let res = await getUser()
+    this.user = res.data.data;
+    console.log(res);
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -76,7 +92,7 @@ export default {};
   .top {
     .topBg {
       background-color: rgba(255, 255, 255, 0.8);
-      padding: 10px;
+      
     }
     background: url("./images/报纸.jpg") no-repeat;
     background-size: cover;
@@ -85,6 +101,7 @@ export default {};
     .top_top {
       display: flex;
       align-items: center;
+      padding: 30px 15px 0px;
       .photo {
         width: 50px;
         height: 50px;
@@ -122,7 +139,8 @@ export default {};
       }
     }
     .top_bottom {
-      margin: 30px 0px 20px;
+      margin: 30px 0px 5px;
+      padding-bottom: 20px;
       display: flex;
       justify-content: space-around;
       .t_b {

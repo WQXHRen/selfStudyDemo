@@ -7,6 +7,7 @@ import search from '../views/search/index.vue'
 import results from '../views/results/index.vue'
 import details from '../views/details/index.vue'
 import mine from "../views/mine/index.vue"
+import profile from "../views/profile/index.vue"
 
 Vue.use(Router)
 
@@ -48,6 +49,10 @@ export default new Router({
     {
       path:'/details/:art_id',
       component:details
+    },
+    {
+      path:'/profile',
+      component:profile
     }
     
 

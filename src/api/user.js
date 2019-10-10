@@ -20,3 +20,12 @@ export const unLikeArt = (target)=>{
     return http.delete('/app/v1_0/article/likings/'+target)
 }
 
+// 获取我的  信息
+export const getUser =( )=>{
+    return http.get('/app/v1_0/user')
+}
+
+// 获取个人信息
+export const getUserInfo = ()=>{
+    return http.get('/app/v1_0/user/profile')
+}
