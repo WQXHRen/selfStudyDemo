@@ -51,14 +51,14 @@ export default {
     // 点赞评论
     async doZan() {
       if (this.details.is_liking) {
+        this.details.is_liking = !this.details.is_liking;
         await unLikeCmt(this.details.com_id);
         this.details.like_count--;
       } else {
+        this.details.is_liking = !this.details.is_liking;
         await likeCmt(this.details.com_id);
-
         this.details.like_count++;
       }
-      this.details.is_liking = !this.details.is_liking;
     }
   }
 };
