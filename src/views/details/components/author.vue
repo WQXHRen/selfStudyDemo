@@ -32,13 +32,19 @@ export default {
   props: ["art_details"],
   methods: {
     async doNoFollow(aut_id) {
-       let res = await noFollow(aut_id);
+       await noFollow(aut_id);
        this.art_details.is_followed = !this.art_details.is_followed
        
     },
    async doFollow(aut_id) {
-     let res = await follow(aut_id);
-     this.art_details.is_followed = !this.art_details.is_followed
+     try {
+       let res = await follow(aut_id);
+       this.art_details.is_followed = !this.art_details.is_followed
+     } catch (error) {
+       if (error.response.data.message=="User cannot follow self.") {
+         this.$toast('不要关注自己哦!');
+       }
+     }
     }
   }
 };
