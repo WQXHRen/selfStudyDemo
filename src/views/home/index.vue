@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <van-nav-bar title="首页" />
-    <van-tabs :value="tabActive" @change="tabChange" class="my_tabs">
+    <van-tabs v-model="tabActive" @change="tabChange" class="my_tabs">
       <van-tab v-for="(e,i) in channels" :key="i" :title="e.name">
         <van-pull-refresh v-model="pullLoading" @refresh="onRefresh">
           <van-list v-model="loading" :finished="finished" finished-text="已经到底了!" @load="onLoad">
