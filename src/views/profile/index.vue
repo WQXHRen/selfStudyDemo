@@ -1,6 +1,12 @@
 <template>
   <div id="profile">
-    <van-nav-bar title="个人信息" right-text="保存" left-arrow  @click-left="$router.back();" @click-right="onSave" />
+    <van-nav-bar
+      title="个人信息"
+      right-text="保存"
+      left-arrow
+      @click-left="$router.back();"
+      @click-right="onSave"
+    />
     <van-cell-group>
       <van-cell class="photoCell" title="头像" is-link value="default" @click="uploType=true">
         <template slot="default">
@@ -109,8 +115,7 @@ export default {
       let fd = new FormData();
       fd.append("photo", this.filePhoto);
       await savePhoto(fd);
-      this.$toast('修改成功!');
-      
+      this.$toast("修改成功!");
     },
     onCancel() {
       this.popShow = false;

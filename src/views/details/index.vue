@@ -21,13 +21,21 @@
       <!-- 点赞文章 -->
       <van-cell :border="false">
         <template slot="title">
-          <div class="artZan" @click="islike">
-            <van-icon
-              :name="Zan==1?'good-job':'good-job-o'"
-              size="20px"
-              :color="Zan==1?'red':'inherit'"
-            />
-            <span :class="{DZan:Zan==1}">&nbsp;{{Zan==1?'取消赞':'点赞'}}</span>
+          <div class="zanORcai">
+            <div class="artZan" @click="islike">
+              <van-icon
+                :name="this.art_details.attitude==1?'good-job':'good-job-o'"
+                size="20px"
+                :color="this.art_details.attitude==1?'red':'inherit'"
+              />
+              <span :class="{DZan:this.art_details.attitude==1}">&nbsp;{{this.art_details.attitude==1?'取消赞':'点赞'}}</span>
+            </div>
+
+            <!-- 踩 -->
+            <div class="artCai" @click="doTrample">
+              <van-icon class="iconCai" :name="this.art_details.attitude==0?'good-job':'good-job-o'" size="20px" />
+              <span>&nbsp;{{this.art_details.attitude==0?'算了吧':'踩'}}</span>
+            </div>
           </div>
         </template>
       </van-cell>
@@ -48,7 +56,7 @@
 
 <script>
 import { getDetails } from "@/api/getArticle.js";
-import { likeArt, unLikeArt } from "@/api/user.js";
+import { likeArt, unLikeArt, trample, unTrample } from "@/api/user.js";
 import { getCmt } from "@/api/comment.js";
 import author from "./components/author";
 import comment from "./components/comment";
@@ -62,7 +70,6 @@ export default {
       currentCmt: {},
       art_id: this.$route.params.art_id,
       art_details: "",
-      Zan: "",
       isLoading: false,
       isfinished: false,
       commentList: [],
@@ -75,6 +82,27 @@ export default {
     };
   },
   methods: {
+    // 点赞文章
+    async islike() {
+      if (this.art_details.attitude == 1) {
+        await unLikeArt(this.art_id.toString());
+        this.art_details.attitude = -1;
+      } else if (this.art_details.attitude != 1) {
+        await likeArt(this.art_id.toString());
+        this.art_details.attitude = 1;
+      }
+    },
+    // 踩这篇文章
+    async doTrample() {
+      if (this.art_details.attitude != 0) {
+        let res = await trample(this.art_id);
+        this.art_details.attitude = 0;
+      } else {
+        let res = await unTrample(this.art_id);
+        this.art_details.attitude = -1;
+      }
+    },
+
     // 评论列表
     async onLoad() {
       let res = await getCmt(this.query);
@@ -85,23 +113,11 @@ export default {
         this.isfinished = true;
       }
       this.isLoading = false;
-    },
-    // 点赞文章
-    async islike() {
-      if (this.Zan == 1) {
-        await unLikeArt(this.art_details.art_id.toString());
-        this.Zan = -1;
-      } else {
-        await likeArt(this.art_details.art_id.toString());
-        this.Zan = 1;
-      }
     }
   },
   async created() {
     let res = await getDetails(this.art_id);
     this.art_details = res.data.data;
-
-    this.Zan = this.art_details.attitude;
   }
 };
 </script>
@@ -119,12 +135,22 @@ export default {
       max-width: 100%;
     }
   }
-  .artZan {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .DZan {
-      color: red;
+  .zanORcai {
+     display: flex;
+      // align-items: center;
+      justify-content: center;
+    .artZan,
+    .artCai {
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .DZan {
+        color: red;
+      }
+    }
+    .artCai .iconCai {
+      transform: rotate(180deg);
     }
   }
 }

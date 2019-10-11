@@ -20,6 +20,18 @@ export const unLikeArt = (target) => {
     return http.delete('/app/v1_0/article/likings/' + target)
 }
 
+// 踩这篇文章
+export const trample = (target)=>{
+    return http.post('/app/v1_0/article/dislikes',{
+        target
+    })
+}
+
+// 不踩这篇文章
+export const unTrample = (target)=>{
+    return http.delete('/app/v1_0/article/dislikes/'+target)
+}
+
 // 获取我的  信息
 export const getUser = () => {
     return http.get('/app/v1_0/user')

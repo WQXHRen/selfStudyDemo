@@ -5,16 +5,15 @@
       <van-tab v-for="(e,i) in channels" :key="i" :title="e.name">
         <van-pull-refresh v-model="pullLoading" @refresh="onRefresh">
           <van-list v-model="loading" :finished="finished" finished-text="已经到底了!" @load="onLoad">
-            <van-cell
-              v-for="(item,index) in articleList"
-              :key="index"
-              :title="item.title"
-              @click="$router.push('/details/'+item.art_id)"
-            >
+            <van-cell v-for="(item,index) in articleList" :key="index">
+              <template slot="title">
+                <span @click="$router.push('/details/'+item.art_id)">{{item.title}}</span>
+              </template>
+
               <template slot="label">
                 <van-grid :border="false" :column-num="3" v-if="item.cover.type>0">
                   <van-grid-item v-for="url in item.cover.images">
-                    <van-image :src="url" />
+                    <van-image :src="url" @click="$router.push('/details/'+item.art_id)" />
                   </van-grid-item>
                 </van-grid>
 
@@ -48,7 +47,7 @@ import {
 } from "../../storage/";
 
 import channel from "./channel.vue";
-import inform from "./inform.vue"
+import inform from "./inform.vue";
 export default {
   name: "home",
   components: {
@@ -57,7 +56,7 @@ export default {
   },
   data() {
     return {
-      dialogShow:false,
+      dialogShow: false,
       changeShow: false,
       pullLoading: false,
       channels: [],
@@ -65,13 +64,13 @@ export default {
       articleList: [],
       loading: false,
       finished: false,
-      item:""
+      item: ""
     };
   },
   methods: {
     // 点击打开弹窗和传值
-    dialog(item){
-      this.item = item
+    dialog(item) {
+      this.item = item;
       this.dialogShow = true;
     },
 
