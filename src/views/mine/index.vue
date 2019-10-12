@@ -57,7 +57,7 @@
           <van-cell class="mineCell" title="消息通知" is-link />
           <van-cell class="mineCell" title="实名认证" is-link />
           <van-cell class="mineCell" title="用户反馈" is-link />
-          <van-cell class="mineCell" title="小智同学" is-link />
+          <van-cell class="mineCell" title="小智同学" is-link @click="$router.push('/xiaozhi')"/>
           <van-cell class="mineCell" title="系统设置" is-link />
         </van-cell-group>
       </div>

@@ -75,8 +75,7 @@ export default {
       user: {},
       type: "",
       actions: [
-        { name: "拍照", color: "#202529" },
-        { name: "选择一张图片", color: "#202529" }
+        { name: "添加图片", color: "#202529" }
       ],
       popup_photo: false,
       popShow: false,

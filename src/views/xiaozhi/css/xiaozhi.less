@@ -1,0 +1,104 @@
+div {
+    box-sizing: border-box;
+}
+
+#xiaoZhi {
+    width           : 100%;
+    height          : 100%;
+    background-color: #eeeded;
+    padding-top     : 46px;
+    padding-bottom  : 43px;
+    overflow       : auto;
+
+    .content {
+        // padding     : 0px 10px 0px;
+        width          : 100%;
+        word-wrap      : break-word;
+        overflow       : auto;
+
+        li {
+            margin   : 15px auto;
+            display  : block;
+            clear    : both;
+            overflow : hidden;
+            max-width: 90%;
+
+            .row_div {
+                vertical-align: middle;
+                font-size     : 16px;
+                overflow      : hidden;
+
+                img {
+                    float        : left;
+                    width        : 40px;
+                    height       : 40px;
+                    border-radius: 5px;
+                }
+
+                span {
+                    background-color: #fff;
+                    padding         : 10px;
+                    border-radius   : 10px;
+                    float           : left;
+                    margin          : 0px 5px;
+                    max-width       : 70%;
+
+                    // border       : 1px solid #ccc;
+
+                }
+
+                .spanleft {
+                    float     : left;
+                    background: #fff;
+                }
+
+                .spanright {
+                    float     : right;
+                    background: #95ec69;
+                }
+
+                .imgleft {
+                    float: left;
+                }
+
+                .imgright {
+                    float: right;
+                }
+            }
+
+            .time {
+                margin-top: 5px;
+                text-align: center;
+                color     : #a6a6a6;
+                font-size : 10px;
+            }
+
+
+        }
+    }
+
+    .footer {
+        width   : 100%;
+        position: fixed;
+        bottom  : 0;
+        left    : 0;
+
+        .footerWrap {
+            display         : flex;
+            align-items     : center;
+            width           : 100%;
+            border-top      : 1px solid black;
+            background-color: #f7f6f6;
+            padding         : 5px;
+
+            .iptContent {
+                // height    : 30px;
+                padding      : 4px;
+                margin-right : 5px;
+                border-radius: 4px;
+            }
+        }
+    }
+
+
+}

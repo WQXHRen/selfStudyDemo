@@ -1,0 +1,81 @@
+div {
+  box-sizing: border-box;
+}
+#xiaoZhi {
+  width: 100%;
+  height: 100%;
+  background-color: #eeeded;
+  padding-top: 46px;
+  padding-bottom: 43px;
+  overflow: auto;
+}
+#xiaoZhi .content {
+  width: 100%;
+  word-wrap: break-word;
+  overflow: auto;
+}
+#xiaoZhi .content li {
+  margin: 15px auto;
+  display: block;
+  clear: both;
+  overflow: hidden;
+  max-width: 90%;
+}
+#xiaoZhi .content li .row_div {
+  vertical-align: middle;
+  font-size: 16px;
+  overflow: hidden;
+}
+#xiaoZhi .content li .row_div img {
+  float: left;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+#xiaoZhi .content li .row_div span {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  float: left;
+  margin: 0px 5px;
+  max-width: 70%;
+}
+#xiaoZhi .content li .row_div .spanleft {
+  float: left;
+  background: #fff;
+}
+#xiaoZhi .content li .row_div .spanright {
+  float: right;
+  background: #95ec69;
+}
+#xiaoZhi .content li .row_div .imgleft {
+  float: left;
+}
+#xiaoZhi .content li .row_div .imgright {
+  float: right;
+}
+#xiaoZhi .content li .time {
+  margin-top: 5px;
+  text-align: center;
+  color: #a6a6a6;
+  font-size: 10px;
+}
+#xiaoZhi .footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+#xiaoZhi .footer .footerWrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-top: 1px solid black;
+  background-color: #f7f6f6;
+  padding: 5px;
+}
+#xiaoZhi .footer .footerWrap .iptContent {
+  padding: 4px;
+  margin-right: 5px;
+  border-radius: 4px;
+}
