@@ -1,9 +1,6 @@
 <template>
-  <div id="xiaoZhi">
-    <!-- 顶部栏 -->
-    <van-nav-bar title="小智同学" left-arrow @click-left="$router.back();" />
-
-    <ul class="content" ref="ul">
+  <div id="xiaoZhi" ref="xiaoZhi">
+    <ul class="content">
       <li class="row" v-for="item in chatList">
         <div class="row_div">
           <template v-if="item.isMe">
@@ -19,6 +16,9 @@
         <div class="time">{{item.timestamp | getTime}}</div>
       </li>
     </ul>
+
+    <!-- 顶部栏 -->
+    <van-nav-bar title="小智同学" left-arrow @click-left="$router.back();" />
     <!-- 底部栏 -->
     <div class="footer">
       <div class="footerWrap">
@@ -63,7 +63,6 @@ export default {
       this.chatList.push(myMSg);
       this.socket.emit("message", myMSg);
       this.msg = "";
-       this.$refs.ul.scrollTop = this.$refs.ul.scrollHeight;
     }
   },
   filters: {
@@ -80,11 +79,14 @@ export default {
     this.socket.on("message", data => {
       data.isMe = false;
       this.chatList.push(data);
-
-      this.$nextTick(() => {
-        this.$refs.ul.scrollTop = this.$refs.ul.scrollHeight;
-      });
     });
+  },
+  watch: {
+    chatList() {
+      this.$nextTick(() => {
+        this.$refs.xiaoZhi.scrollTop = this.$refs.xiaoZhi.scrollHeight
+      });
+    }
   }
 };
 </script>
